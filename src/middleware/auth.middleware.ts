@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+const ADMIN_API_KEY = "qfcdweqf123412"
 
 // Middleware to verify user JWT
 export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
@@ -22,8 +23,8 @@ export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
 
 // Middleware to verify admin API key
 export const verifyAdmin = (req: Request, res: Response, next: NextFunction) => {
-  const apiKey = req.headers["x-api-key"];
-  if (apiKey === process.env.ADMIN_API_KEY) {
+  const apiKey = req.headers["Admin-API-Key"];
+  if (apiKey === ADMIN_API_KEY) {
     next();
   } else {
     res.status(403).json({ message: "Forbidden" });
